@@ -1,6 +1,19 @@
 ---
 import Base from "../layouts/Base.astro";
+import { Image } from "astro:assets";
+import afficheUnImage from "../assets/img/affiche_un.png";
+import antonImage from "../assets/img/anton.png";
+import afficheDeuxImage from "../assets/img/affiche_deux.png";
 ---
+
 <Base titre="Accueil">
-	<h1>Accueil</h1>
+	<h1 class="text-blue-700 font-extrabold text-8xl uppercase py-3 pl-3">
+		Accueil
+	</h1>
+	<h2 class="text-blue-700 font-normal text-2xl uppercase py-3 pl-3">
+		Virtual angels : the power of creating
+	</h2>
+	<Image src={afficheUnImage} alt="Image affiche un" class="mt-20" />
+	<Image src={antonImage} alt="Image d'Anton" class="mb-8" />
+	<Image src={afficheDeuxImage} alt="Image affiche deux" />
 </Base>
