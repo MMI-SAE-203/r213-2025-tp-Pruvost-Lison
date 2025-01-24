@@ -1,7 +1,8 @@
 ---
-import Base from "../layouts/Base.astro";
-import Card from "../components/Card.astro";
+import Base from "../layouts/Base.astro"; // Layout principal
+import Card from "../components/Card.astro"; // Composant Card pour chaque offre
 
+// Données statiques des offres
 const offres = [
     {
         adresse: "2821 Lake Sevilla, Palm Harbor, TX",
@@ -12,7 +13,7 @@ const offres = [
         nomMaison: "Beverly Springfield",
         prix: 2700,
         surface: 45,
-        imgUrl: "image1.png",
+        imgUrl: "https://i.pinimg.com/736x/e9/f6/80/e9f6809d7cd32a46c6ef39d2fdbbf9e1.jpg",
     },
     {
         adresse: "2699 Green Valley, Highland Lake",
@@ -23,7 +24,7 @@ const offres = [
         nomMaison: "Palm Harbor",
         prix: 2095,
         surface: 42,
-        imgUrl: "image2.png",
+        imgUrl: "https://i.pinimg.com/736x/a8/93/5f/a8935f9522cc572b923f76b5f84643fd.jpg",
     },
     {
         adresse: "909 Woodland St, Michigan, IN",
@@ -34,27 +35,33 @@ const offres = [
         nomMaison: "Faulkner Ave",
         prix: 4550,
         surface: 80,
-        imgUrl: "image3.png",
+        imgUrl: "https://i.pinimg.com/736x/79/dd/b3/79ddb302c80e3031736ba6a9512976c8.jpg",
     },
 ];
 ---
 
 <Base titre="Offres">
-    <h1 class="text-blue-700 font-extrabold text-6xl uppercase pl-5">Offres</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-        {
-            offres.map((offre) => (
-                <Card
-                    key={offre.id}
-                    nomMaison={offre.nomMaison}
-                    adresse={offre.adresse}
-                    prix={offre.prix}
-                    surface={offre.surface}
-                    nbChambres={offre.nbChambres}
-                    nbSdb={offre.nbSdb}
-                    imgUrl={offre.imgUrl}
-                />
-            ))
-        }
+    <h1 class="text-blue-700 font-extrabold text-6xl uppercase pl-5 mb-5">
+        Offres
+    </h1>
+
+    <div x-data="{ showFavorites: false }" class="p-5">
+        <button
+            @click="showFavorites = !showFavorites"
+            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+        >
+            <span x-show="!showFavorites">Afficher les favoris</span>
+            <span x-show="showFavorites">Afficher tout</span>
+        </button>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+            <div x-show="!showFavorites">
+                {offres.map((offre) => <Card {...offre} />)}
+            </div>
+
+            <div x-show="showFavorites">
+                {offres.map((offre) => offre.favori && <Card {...offre} />)}
+            </div>
+        </div>
     </div>
 </Base>

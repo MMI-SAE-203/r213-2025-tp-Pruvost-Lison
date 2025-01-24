@@ -1,30 +1,31 @@
 ---
 export interface Props {
-    nomMaison: string;
     adresse: string;
-    prix: number;
-    surface: number;
+    favori: boolean;
+    id: string;
     nbChambres: number;
     nbSdb: number;
+    nomMaison: string;
+    prix: number;
+    surface: number;
     imgUrl: string;
 }
 
-const { nomMaison, adresse, prix, surface, nbChambres, nbSdb, imgUrl } =
-    Astro.props;
+const { ...offre } = Astro.props;
 ---
 
-<div class="card border p-4 shadow-lg">
+<div class="card border p-4 shadow-lg rounded-lg transition hover:shadow-xl">
     <img
-        src={imgUrl}
-        alt={`Image de ${nomMaison}`}
-        class="w-full h-32 object-cover mb-4"
+        src={offre.imgUrl}
+        alt={`Image de ${offre.nomMaison}`}
+        class="w-full h-32 object-cover rounded-t-lg mb-4"
     />
-    <h2 class="text-xl font-bold mb-2">{nomMaison}</h2>
-    <p class="text-gray-600">{adresse}</p>
-    <ul class="mt-2">
-        <li>Prix : {prix} € / mois</li>
-        <li>Surface : {surface} m²</li>
-        <li>Chambres : {nbChambres}</li>
-        <li>Salles de bain : {nbSdb}</li>
+    <h2 class="text-xl font-bold mb-2">{offre.nomMaison}</h2>
+    <p class="text-gray-600">{offre.adresse}</p>
+    <ul class="mt-2 text-sm text-gray-700">
+        <li>Prix : {offre.prix} € / mois</li>
+        <li>Surface : {offre.surface} m²</li>
+        <li>Chambres : {offre.nbChambres}</li>
+        <li>Salles de bain : {offre.nbSdb}</li>
     </ul>
 </div>
