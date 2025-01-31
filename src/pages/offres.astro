@@ -7,20 +7,51 @@ import { allMaisons } from "../backend.mjs";
 const offres = await allMaisons();
 ---
 
-
 <Base titre="Offres">
     <h1 class="text-blue-700 font-extrabold text-6xl uppercase pl-5 mb-5">
         Offres
     </h1>
 
-    <div x-data="{ showFavorites: false }" class="p-5">
-        <button
-            @click="showFavorites = !showFavorites"
-            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+    <div
+        x-data="{ showFavorites: false, view: 'grid', offres: [] }"
+        x-init="offres = JSON.parse($el.getAttribute('data-offres'))"
+        class="p-5"
+        data-offres={`{JSON.stringify(offres)}`}
+    >
+        <div class="flex space-x-4 mb-4">
+            <button
+                @click="showFavorites = !showFavorites"
+                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition"
+            >
+                <span x-show="!showFavorites">Afficher les favoris</span>
+                <span x-show="showFavorites">Afficher tout</span>
+            </button>
+
+            <button
+                @click="view = 'grid'"
+                :class="view === 'grid' ? 'bg-blue-700 text-white' : 'bg-gray-300'"
+                class="px-4 py-2 border rounded"
+            >
+                Grille
+            </button>
+
+            <button
+                @click="view = 'list'"
+                :class="view === 'list' ? 'bg-blue-700 text-white' : 'bg-gray-300'"
+                class="px-4 py-2 border rounded"
+            >
+                Liste
+            </button>
+        </div>
+        <div
+            :class="view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'flex flex-col space-y-4'"
         >
-            <span x-show="!showFavorites">Afficher les favoris</span>
-            <span x-show="showFavorites">Afficher tout</span>
-        </button>
+            <template x-for="offre in offres" :key="offre.id">
+                <div x-show="!showFavorites || offre.favori">
+                    <Card :nom="offre.nom" :imageUrl="offre.imageUrl" />
+                </div>
+            </template>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
             <div x-show="!showFavorites">
