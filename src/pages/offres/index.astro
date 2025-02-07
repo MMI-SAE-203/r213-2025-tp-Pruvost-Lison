@@ -1,7 +1,7 @@
 ---
-import Base from "../layouts/Base.astro"; // Layout principal
-import Card from "../components/Card.astro"; // Composant Card pour chaque offre
-import { allMaisons } from "../backend.mjs";
+import Base from "../../layouts/Base.astro"; // Layout principal
+import Card from "../../components/Card.astro"; // Composant Card pour chaque offre
+import { allMaisons } from "../../backend.mjs";
 
 // Données statiques des offres
 const offres = await allMaisons();
