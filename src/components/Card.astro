@@ -28,4 +28,7 @@ const { ...offre } = Astro.props;
         <li>Chambres : {offre.nbChambres}</li>
         <li>Salles de bain : {offre.nbSdb}</li>
     </ul>
+    <div>
+        <a href={`/offres/${offre.id}`}>Voir plus</a>
+    </div>
 </div>
