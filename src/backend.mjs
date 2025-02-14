@@ -4,6 +4,19 @@ import { record } from 'astro:schema';
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('http://127.0.0.1:8090') ;
 
+
+export async function getMaisonsParSurface(surface) {
+    try {
+        let data = await pb.collection('Maison').getFullList({
+            filter: `surface > ${surface}`
+        });
+        return data;
+    } catch (error) {
+        console.log('Erreur lors de la récupération des maisons par surface', error);
+        return [];
+    }
+}
+
 export async function getOffre(id) {
     try {
         let data = await pb.collection('Maison').getOne(id);
@@ -50,6 +63,7 @@ export async function allMaisonsSorted() {
 
 // Question 14
 export async function bySurface(surface) {
+    console.log ("ici dans bySurface:", surface)
     const records = await pb.collection('Maison').getFullList({
         filter: `surface > ${surface}`  
     });
@@ -74,5 +88,22 @@ export async function getAgentByID(id) {
     } catch (error) {
         console.error("Erreur lors de la récupération de l'agent :", error);
         return null;
+    }
+}
+
+
+export async function addOffre(house) {
+    try {
+        await pb.collection('Maison').create(house);
+        return {
+            success: true,
+            message: 'Offre ajoutée avec succès'
+        };
+    } catch (error) {
+        console.log('Une erreur est survenue en ajoutant la maison', error);
+        return {
+            success: false,
+            message: 'Une erreur est survenue en ajoutant la maison'
+        };
     }
 }
