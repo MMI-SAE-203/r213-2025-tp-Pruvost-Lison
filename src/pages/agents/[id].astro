@@ -1,0 +1,30 @@
+---
+import { pb } from "../../backend.mjs";
+
+const { id } = Astro.params;
+const agent = await pb.collection("agents").getOne(id);
+const offres = await pb
+    .collection("Maison")
+    .getFullList({ filter: `agentId="${id}"` });
+---
+
+---
+<title>Offres de {agent.nom}</title>
+---
+
+<h1 class="text-2xl font-bold mb-4">Offres de {agent.nom}</h1>
+
+<ul>
+    {
+        offres.map((offre) => (
+            <li key={offre.id} class="mb-2">
+                <a
+                    href={`/offres/${offre.id}`}
+                    class="text-blue-500 hover:underline"
+                >
+                    {offre.titre}
+                </a>
+            </li>
+        ))
+    }
+</ul>

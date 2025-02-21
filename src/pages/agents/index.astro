@@ -1,0 +1,45 @@
+---
+import { Debug } from "astro:components";
+import { getAllAgents } from "../../backend.mjs";
+
+const agents = await getAllAgents();
+console.log("Agents récupérés :", agents);
+import Card from "../../components/Card.astro";
+---
+
+<!-- <h1>Liste des agents</h1>
+
+<ul>
+    {
+        agents.length > 0 ? (
+            agents.map((agent) => (
+                <li>
+                    {/* <Debug {agent} /> */}
+                    <a
+                        href={`/agents/${agent.id}`}
+                        class="text-blue-500 hover:underline"
+                    >
+                        {agent.Nom}
+                    </a>
+                </li>
+            ))
+        ) : (
+            <p>Aucun agent trouvé.</p>
+        )
+    }
+</ul> -->
+<h1 class="text-3xl font-bold mb-6">Liste des Agents</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+        agents.length > 0 ? (
+            agents.map((agent) => (
+                <a>
+                    {agent.Nom} {agent.Prenom} {agent.Email}
+                </a>
+            ))
+        ) : (
+            <p>Aucun agent trouvé.</p>
+        )
+    }
+</div>
