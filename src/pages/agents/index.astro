@@ -1,45 +1,26 @@
 ---
-import { Debug } from "astro:components";
 import { getAllAgents } from "../../backend.mjs";
 
 const agents = await getAllAgents();
-console.log("Agents récupérés :", agents);
-import Card from "../../components/Card.astro";
+console.log("Agents chargés dans Astro :", agents); 
 ---
 
-<!-- <h1>Liste des agents</h1>
+<h1 class="text-blue-700 font-extrabold text-2xl uppercase py-3 pl-3">
+    Liste des Agents
+</h1>
 
-<ul>
-    {
-        agents.length > 0 ? (
-            agents.map((agent) => (
-                <li>
-                    {/* <Debug {agent} /> */}
-                    <a
-                        href={`/agents/${agent.id}`}
-                        class="text-blue-500 hover:underline"
-                    >
-                        {agent.Nom}
+{
+    agents.length > 0 ? (
+        <ul>
+            {agents.map((agent) => (
+                <li class="pl-4">
+                    <a href={`/agents/${agent.id}`}>
+                        {agent.Nom} {agent.Prenom} - {agent.Email}
                     </a>
                 </li>
-            ))
-        ) : (
-            <p>Aucun agent trouvé.</p>
-        )
-    }
-</ul> -->
-<h1 class="text-3xl font-bold mb-6">Liste des Agents</h1>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {
-        agents.length > 0 ? (
-            agents.map((agent) => (
-                <a>
-                    {agent.Nom} {agent.Prenom} {agent.Email}
-                </a>
-            ))
-        ) : (
-            <p>Aucun agent trouvé.</p>
-        )
-    }
-</div>
+            ))}
+        </ul>
+    ) : (
+        <p>Aucun agent trouvé.</p>
+    )
+}

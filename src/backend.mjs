@@ -139,3 +139,27 @@ export async function getOffresByAgent(agentEmail) {
         filter: `Agent = "${agentEmail}"`,
     });
 }
+
+
+export async function getAllAgents() {
+    try {
+        const agents = await pb.collection("Agent").getFullList({
+            auth: null, // Permet d'accéder sans authentification
+        });
+        return agents;
+    } catch (error) {
+        console.error("Erreur lors de la récupération des agents :", error);
+        return [];
+    }
+}
+
+
+
+export async function setFavori(id, favori) {
+    try {
+        await pb.collection("Maison").update(id, { favori: favori });
+        console.log(`Maison ${id} mise à jour avec favori = ${favori}`);
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour du favori :", error);
+    }
+}

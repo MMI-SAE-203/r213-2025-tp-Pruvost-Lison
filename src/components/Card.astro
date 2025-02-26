@@ -20,9 +20,13 @@ export interface Props {
 }
 
 const { nom, prenom, email } = Astro.props;
+import iconfavoris from "../assets/img/favorite.svg";
 ---
 
-<div class="card border p-4 shadow-lg rounded-lg transition hover:shadow-xl">
+<div
+    x-data={`{favori: ${offre.favori}, clickFavori() {this.favori = !this.favori; setFavori(${JSON.stringify(offre)});}}`}
+    class="card border p-4 shadow-lg rounded-lg transition hover:shadow-xl"
+>
     <img
         src={offre.imgUrl}
         alt={`Image de ${offre.nomMaison}`}
@@ -39,25 +43,15 @@ const { nom, prenom, email } = Astro.props;
     <div>
         <a href={`/offres/${offre.id}`}>Voir plus</a>
     </div>
-</div>
 
-<div
-    class="card border p-4 shadow-lg rounded-lg transition hover:shadow-xl"
-    x-data={`{favori: ${offre.favori}, clickFavori() {this.favori = !this.favori; window.setFavori(${JSON.stringify(offre)});}}`}
->
-    <div
-        class="card p-6 bg-white shadow-xl rounded-lg flex flex-col items-center"
+    <button class="absolute bottom-0 left-0 p-2 text-white rounded-br-lg" @click="clickFavori"
     >
-        <!-- Informations de l'agent -->
-        <ul class="mt-2 text-sm text-gray-700">
-            <li>Nom : {nom}</li>
-            <li>Prenom : {prenom}</li>
-            <li>Email : {email}</li>
-        </ul>
-    </div>
+        <img src={iconfavoris.src} alt="Favori" class="mt-20" />
+    </button>
 </div>
 
-<div class="card p-6 bg-white shadow-xl rounded-lg flex flex-col items-center">
-        <h2 class="text-2xl font-semibold mb-2">{nom} {prenom}</h2>
-        <p class="text-gray-600 mb-2">Email : {email}</p>
-    </div>
+<script>
+    //@ts-nocheck
+    import { setFavori } from "../../backend.mjs";
+    window.setFavori = setFavori;
+</script>
